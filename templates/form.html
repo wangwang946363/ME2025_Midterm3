@@ -1,5 +1,82 @@
-{% extends 'index.html' %}
+{% extends "index.html" %}
 
 {% block form %}
+<form action="/product" method="POST">
+    <table style="width: 100%; border-collapse: separate; border-spacing: 0 10px;">
+        <tr>
+            <td><label for="date">日期：</label></td>
+            <td><input type="date" id="date" name="product_date" required></td>
+        </tr>
+        <tr>
+            <td><label for="customer">客戶名稱：</label></td>
+            <td><input type="text" id="customer" name="customer_name" required></td>
+        </tr>
+        <tr>
+            <td><label for="category">商品種類：</label></td>
+            <td>
+                <select id="category" name="category" onchange="selectCategory()" required>
+                    <option value="" disabled selected>請選擇種類</option>
+                    <option value="飲料">飲料</option>
+                    <option value="主食">主食</option>
+                    <option value="點心">點心</option>
+                    <option value="輕食">輕食</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="product">商品名稱：</label></td>
+            <td>
+                <select id="product" name="product_name" onchange="selectProduct()" required>
+                    <option value="" disabled selected>請先選擇種類</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="price">單價：</label></td>
+            <td>
+                <input type="number" id="price" name="price" readonly>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="amount">數量：</label></td>
+            <td>
+                <input type="number" id="amount" name="product_amount" value="1" min="1" onchange="countTotal()" required>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="total">小計：</label></td>
+            <td>
+                <input type="number" id="total" name="product_total" readonly>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="status">狀態：</label></td>
+            <td>
+                <select id="status" name="product_status">
+                    <option value="未付款">未付款</option>
+                    <option value="已付款">已付款</option>
+                    <option value="已完成">已完成</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="note">備註：</label></td>
+            <td><input type="text" id="note" name="product_note"></td>
+        </tr>
+    </table>
+    
+    <div style="text-align: center; margin-top: 15px;">
+        <button type="submit">送出</button>
+    </div>
+</form>
 
-{% endblock%}
+<script>
+    // 自動將日期欄位設定為今天
+    document.addEventListener("DOMContentLoaded", function() {
+        const dateInput = document.getElementById('date');
+        if(dateInput) {
+            dateInput.valueAsDate = new Date();
+        }
+    });
+</script>
+{% endblock %}
